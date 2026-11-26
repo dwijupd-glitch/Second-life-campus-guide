@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Second Life – Campus e-waste guide</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap">
+<style>
+:root{--ink:#14261f;--paper:#f2f5f0;--card:#ffffff;--line:#cdd8cf;--pcb:#0f5d4a;--pcb-ink:#ffffff;--copper:#b4561f;--soft:#e3ece5;--warn:#a3201a;--warn-bg:#fbe9e7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e6efe8;--paper:#0e1a15;--card:#15251e;--line:#2a4035;--pcb:#5cc9a7;--pcb-ink:#07241b;--copper:#e69a68;--soft:#1b3027;--warn:#ff9d94;--warn-bg:#3a1a17}}
+:root[data-theme="dark"]{--ink:#e6efe8;--paper:#0e1a15;--card:#15251e;--line:#2a4035;--pcb:#5cc9a7;--pcb-ink:#07241b;--copper:#e69a68;--soft:#1b3027;--warn:#ff9d94;--warn-bg:#3a1a17}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.55 "Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:640px;margin:0 auto;padding:20px 18px 48px}
+h1{font-size:2.3rem;line-height:1.05;font-weight:800;letter-spacing:-.02em;margin:18px 0 10px}
+h2{font-size:1.35rem;font-weight:700;margin:0 0 6px}
+p{margin:0 0 12px;max-width:62ch}
+.lede{font-size:1.08rem}
+.trace{height:14px;margin:6px 0 0;background:
+ linear-gradient(var(--copper),var(--copper)) 0 6px/46% 2px no-repeat,
+ radial-gradient(circle,var(--copper) 4px,transparent 5px) 46% 7px/14px 14px no-repeat,
+ linear-gradient(var(--copper),var(--copper)) 100% 6px/50% 2px no-repeat}
+nav{display:flex;gap:6px;margin:22px 0 16px;border-bottom:2px solid var(--line)}
+nav button{flex:1;font:inherit;font-weight:600;padding:12px 6px;background:none;border:0;border-bottom:4px solid transparent;margin-bottom:-2px;color:var(--ink);opacity:.7;cursor:pointer;min-height:48px}
+nav button[aria-selected="true"]{opacity:1;border-bottom-color:var(--pcb)}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--copper);outline-offset:2px}
+section[hidden]{display:none}
+label{display:block;font-weight:600;margin:14px 0 6px}
+select,input[type=number]{width:100%;font:inherit;padding:12px;border:1.5px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);min-height:48px}
+.btn{font:inherit;font-weight:700;background:var(--pcb);color:var(--pcb-ink);border:0;border-radius:6px;padding:13px 20px;margin-top:16px;cursor:pointer;min-height:48px;width:100%}
+.result{margin-top:20px;padding:16px;border-radius:8px;background:var(--soft);border-left:6px solid var(--pcb)}
+.result.urgent{background:var(--warn-bg);border-left-color:var(--warn)}
+.result h3{margin:0 0 6px;font-size:1.2rem}
+.result ul{margin:8px 0 0;padding-left:20px}
+.entry{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:14px;margin-bottom:10px}
+.entry h3{margin:0 0 2px;font-size:1.05rem}
+.meta{font-size:.92rem;opacity:.85;margin:0}
+.tag{display:inline-block;font-size:.8rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--soft);margin:6px 6px 0 0}
+.tag.todo{background:var(--warn-bg);color:var(--warn)}
+.big{font-size:2.6rem;font-weight:800;line-height:1;color:var(--pcb)}
+.note{font-size:.88rem;opacity:.8;border-top:1px solid var(--line);padding-top:12px;margin-top:22px}
+@media (prefers-reduced-motion:no-preference){.result{animation:in .25s ease-out}@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}}
+nav button{font-size:.85rem;padding:12px 2px}
+.hier{display:flex;align-items:stretch;gap:0;margin:18px 0 0;border-radius:8px;overflow:hidden;border:1.5px solid var(--pcb)}
+.hier div{flex:1;padding:10px 8px;text-align:center;font-weight:700;font-size:.92rem;background:var(--soft)}
+.hier div+div{border-left:1.5px solid var(--pcb)}
+.hier div:first-child{background:var(--pcb);color:var(--pcb-ink)}
+.hier small{display:block;font-weight:400;font-size:.76rem;opacity:.85}
+.chart{margin-top:16px}
+.chart svg,.flow svg{width:100%;height:auto;display:block}
+.bl{font:600 12px "Bricolage Grotesque",system-ui,sans-serif;fill:var(--ink)}
+.bv{font:700 12px "Bricolage Grotesque",system-ui,sans-serif;fill:var(--ink)}
+.bar{fill:var(--pcb);opacity:.55}
+.bar.hl{fill:var(--copper);opacity:1}
+.flow{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:10px;margin:12px 0 22px}
+.flow text{font:600 12px "Bricolage Grotesque",system-ui,sans-serif;fill:var(--ink);text-anchor:middle}
+.flow .fn{fill:var(--card);stroke:var(--pcb);stroke-width:1.6}
+.flow .fg{fill:var(--soft);stroke:var(--pcb);stroke-width:1.6}
+.flow .fw{fill:var(--warn-bg);stroke:var(--warn);stroke-width:1.6}
+.flow .ln{stroke:var(--ink);stroke-width:1.5;fill:none}
+.flow .yn{font-size:11px;fill:var(--copper)}
+.blk{margin-top:44px}
+.blk>h2{font-size:1.5rem;letter-spacing:-.01em}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--card);border:1.5px solid var(--line);border-radius:8px;margin-bottom:8px;font-weight:400;cursor:pointer;margin-top:0}
+.chk input{width:22px;height:22px;margin-top:2px;accent-color:var(--pcb);flex:none}
+.prog{height:10px;border-radius:99px;background:var(--soft);overflow:hidden;margin:14px 0 6px}
+.prog i{display:block;height:100%;width:0;background:var(--pcb);transition:width .3s}
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dd div{padding:14px;border-radius:8px;border:1.5px solid var(--line);background:var(--card)}
+.dd .do{border-top:5px solid var(--pcb)}
+.dd .dont{border-top:5px solid var(--warn)}
+.dd h3{margin:0 0 6px;font-size:1.05rem}
+.dd ul{margin:0;padding-left:18px;font-size:.95rem}
+.dd li{margin-bottom:5px}
+@media (max-width:480px){.dd{grid-template-columns:1fr}}
+.sdg{display:flex;gap:12px;padding:12px 14px;background:var(--card);border:1.5px solid var(--line);border-left-width:8px;border-radius:8px;margin-bottom:8px}
+.sdg b{flex:none;min-width:58px}
+.sdg span{font-size:.95rem}
+details{background:var(--card);border:1.5px solid var(--line);border-radius:8px;margin-bottom:8px}
+summary{padding:14px;font-weight:600;cursor:pointer;min-height:48px}
+details p{padding:0 14px;margin:0 0 14px}
+footer{margin-top:48px;padding:18px;border-radius:8px;background:var(--pcb);color:var(--pcb-ink)}
+footer p{margin:0 0 6px;font-size:.92rem}
+footer strong{font-size:1.1rem}
+.hero{width:100%;height:auto;display:block;margin:14px 0 2px}
+.hero .tr{stroke:var(--copper);stroke-width:2.5;fill:none;stroke-dasharray:340}
+.hero .sh{fill:var(--card);stroke:var(--pcb);stroke-width:2}
+.hero .sf{fill:var(--soft);stroke:none}
+.hero .cp{fill:var(--copper)}
+.hero .gr{fill:none;stroke:var(--copper);stroke-width:4;stroke-dasharray:3 3}
+.hero .lf{fill:var(--pcb)}
+@media (prefers-reduced-motion:no-preference){.hero .tr{animation:dr 1.3s ease-out}@keyframes dr{from{stroke-dashoffset:340}}}
+.ico{width:1.1em;height:1.1em;vertical-align:-.15em;margin-right:8px;fill:none;stroke:var(--pcb);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>Give your old gadgets a second life</h1>
+  <div class="trace" aria-hidden="true"></div>
+  <svg class="hero" viewBox="0 0 360 120" role="img" aria-label="Illustration: a phone being repaired, passed on and recycled">
+    <path class="tr" d="M20 102H340"/>
+    <circle class="cp" cx="60" cy="102" r="5"/><circle class="cp" cx="180" cy="102" r="5"/><circle class="cp" cx="300" cy="102" r="5"/>
+    <rect class="sh" x="44" y="24" width="32" height="58" rx="6"/><rect class="sf" x="49" y="31" width="22" height="38" rx="2"/><circle class="cp" cx="60" cy="75" r="2.5"/>
+    <circle class="gr" cx="84" cy="68" r="9"/><circle class="sh" cx="84" cy="68" r="4"/>
+    <rect class="sh" x="158" y="28" width="30" height="52" rx="6"/><rect class="sh" x="174" y="38" width="30" height="52" rx="6"/><rect class="sf" x="179" y="45" width="20" height="34" rx="2"/>
+    <path class="gr" style="stroke-dasharray:none;stroke-width:2.5" d="M152 22Q181 4 210 22"/><polygon class="cp" points="212,24 203,16 202,27"/>
+    <rect class="sh" x="282" y="32" width="36" height="50" rx="5"/><rect class="lf" x="294" y="25" width="12" height="7" rx="2"/>
+    <path class="lf" d="M300 72C287 63 291 46 309 41C313 56 309 68 300 72Z"/><path d="M300 72L304 54" stroke="var(--card)" stroke-width="1.5" fill="none"/>
+  </svg>
+  <p class="lede" style="margin-top:14px">Not sure whether to repair, reuse or recycle? Answer a few questions, find a safe drop-off point, and see the carbon you can save.</p>
+  <div class="hier" aria-label="Order of preference: repair, reuse, recycle"><div>Repair first<small>fix what is broken</small></div><div>Reuse next<small>pass it on</small></div><div>Recycle last<small>safe, authorized</small></div></div>
+
+  <nav role="tablist" aria-label="Sections">
+    <button role="tab" id="t0" aria-selected="true" aria-controls="p0">Repair or recycle</button>
+    <button role="tab" id="t1" aria-selected="false" aria-controls="p1">Drop-off points</button>
+    <button role="tab" id="t2" aria-selected="false" aria-controls="p2">Carbon saved</button>
+    <button role="tab" id="t3" aria-selected="false" aria-controls="p3">How it works</button>
+  </nav>
+
+  <section id="p0" role="tabpanel" aria-labelledby="t0">
+    <h2>Check what may be wrong</h2>
+    <p>Answer a few questions for safe first checks and a likely next step. This guide cannot confirm a hardware fault.</p>
+    <label for="dev">Device</label>
+    <select id="dev"><option value="phone">Phone</option><option value="laptop">Laptop</option><option value="tablet">Tablet</option><option value="powerbank">Power bank or loose battery</option><option value="charger">Charger or cable</option></select>
+    <label for="age">How old is it?</label>
+    <select id="age"><option value="0">Under 2 years</option><option value="1">2 to 4 years</option><option value="2">5 years or more</option></select>
+    <label for="sym">Main problem</label>
+    <select id="sym">
+      <option value="none">Works fine, I just want something new</option>
+      <option value="slow">Slow or full storage</option>
+      <option value="battery">Battery drains fast</option>
+      <option value="screen">Cracked screen or broken port</option>
+      <option value="dead">Will not turn on</option>
+      <option value="water">Water damage</option>
+      <option value="swollen">Swollen, hot or leaking battery</option>
+    </select>
+    <div id="followup"></div>
+    <button class="btn" id="go0">Check my device</button>
+    <div id="out0" aria-live="polite"></div>
+  </section>
+
+  <section id="p1" role="tabpanel" aria-labelledby="t1" hidden>
+    <h2>Where can I drop it off?</h2>
+    <label for="ftype">Show</label>
+    <select id="ftype"><option value="all">All places</option><option value="Campus bin">Campus bins</option><option value="Authorized recycler">Authorized recyclers</option><option value="Repair shop">Repair shops</option><option value="Take-back">Brand take-back</option></select>
+    <div id="list" style="margin-top:14px"></div>
+    <p class="note">The entries above are placeholders. Replace each one with a real place the team has visited or phoned, then remove its “Verify” tag. Check an e-waste recycler’s authorization on the CPCB or state pollution control board list before listing it.</p>
+  </section>
+
+  <section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+    <h2>How much carbon can I save?</h2>
+    <p>Keeping a device longer spreads the emissions from making it over more years.</p>
+    <label for="cdev">Device</label>
+    <select id="cdev"></select>
+    <label for="cyrs">Extra years you will keep it</label>
+    <input type="number" id="cyrs" min="1" max="10" value="2" inputmode="numeric">
+    <button class="btn" id="go2">Calculate</button>
+    <div id="out2" aria-live="polite"></div>
+    <p class="note" id="cnote"></p>
+  </section>
+
+  <section id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+    <h2>How the advice is decided</h2>
+    <p>The Repair or recycle tab follows this path. Safety always comes first.</p>
+    <div class="flow"><svg viewBox="0 0 360 440" role="img" aria-label="Flowchart: check battery safety, then whether the device works, then whether repair is cheap, otherwise recycle">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="currentColor" style="color:var(--ink)"/></marker></defs>
+<rect class="fn" x="30" y="8" width="200" height="40" rx="8"/><text x="130" y="33">Device is faulty or old</text>
+<path class="ln" d="M130 48V78" marker-end="url(#ar)"/>
+<polygon class="fn" points="130,78 230,113 130,148 30,113"/><text x="130" y="111">Swollen or leaking</text><text x="130" y="125">battery?</text>
+<path class="ln" d="M230 113H250" marker-end="url(#ar)"/><text class="yn" x="240" y="106">Yes</text>
+<rect class="fw" x="250" y="93" width="100" height="40" rx="8"/><text x="300" y="110">Stop using it.</text><text x="300" y="124">Recycle safely</text>
+<path class="ln" d="M130 148V178" marker-end="url(#ar)"/><text class="yn" x="145" y="166">No</text>
+<polygon class="fn" points="130,178 230,213 130,248 30,213"/><text x="130" y="217">Still works fine?</text>
+<path class="ln" d="M230 213H250" marker-end="url(#ar)"/><text class="yn" x="240" y="206">Yes</text>
+<rect class="fg" x="250" y="193" width="100" height="40" rx="8"/><text x="300" y="210">Keep it or</text><text x="300" y="224">pass it on</text>
+<path class="ln" d="M130 248V278" marker-end="url(#ar)"/><text class="yn" x="145" y="266">No</text>
+<polygon class="fn" points="130,278 230,313 130,348 30,313"/><text x="130" y="311">Is the repair</text><text x="130" y="325">quote low?</text>
+<path class="ln" d="M230 313H250" marker-end="url(#ar)"/><text class="yn" x="240" y="306">Yes</text>
+<rect class="fg" x="250" y="293" width="100" height="40" rx="8"/><text x="300" y="317">Repair it</text>
+<path class="ln" d="M130 348V378" marker-end="url(#ar)"/><text class="yn" x="145" y="366">No</text>
+<rect class="fw" x="30" y="378" width="200" height="46" rx="8"/><text x="130" y="398">Recycle at an</text><text x="130" y="412">authorized recycler</text>
+</svg></div>
+    <h2>Where the carbon comes from</h2>
+    <p>Most of a device footprint is created before you ever switch it on. Estimated kg CO₂e from making each device:</p>
+    <div class="chart" id="fpchart"></div>
+    <p class="note">The Fairphone 5 production figure is 32.7 kg CO₂e, from Fairphone's <a href="https://www.fairphone.com/wp-content/uploads/2026/04/Fairphone-Impact_Report-2025.pdf" target="_blank" rel="noopener noreferrer">2025 Impact Report</a>. It is a model-specific example. Laptop and tablet figures are sample placeholders and still need sources.</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-wipe">
+    <h2 id="h-wipe"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7.5 12.5l3 3 6-6.5"/></svg>Before you hand over a device</h2>
+    <p>Tick each step as you finish it.</p>
+    <label class="chk"><input type="checkbox" class="wipe"> Back up photos, files and contacts</label>
+    <label class="chk"><input type="checkbox" class="wipe"> Sign out of your Google, Apple and other accounts</label>
+    <label class="chk"><input type="checkbox" class="wipe"> Remove the SIM and memory card</label>
+    <label class="chk"><input type="checkbox" class="wipe"> Factory reset the device</label>
+    <label class="chk"><input type="checkbox" class="wipe"> Take the case, charger and cable too</label>
+    <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="pbar"><i id="pfill"></i></div>
+    <p id="ptxt" style="font-weight:600">0 of 5 steps done</p>
+  </section>
+
+  <section class="blk" aria-labelledby="h-bat">
+    <h2 id="h-bat"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L2.5 20h19L12 3z"/><path d="M12 10v5M12 17.5v.5"/></svg>Handling batteries safely</h2>
+    <div class="dd">
+      <div class="do"><h3>Do</h3><ul><li>Keep spare batteries cool and dry</li><li>Tape over the contacts of loose batteries</li><li>Hand them to an authorized recycler</li><li>Use the campus battery bin</li></ul></div>
+      <div class="dont"><h3>Do not</h3><ul><li>Throw them in a regular bin</li><li>Open, crush or puncture them</li><li>Keep charging a swollen device</li><li>Give them to unlicensed scrap buyers</li></ul></div>
+    </div>
+  </section>
+
+  <section class="blk" aria-labelledby="h-faq">
+    <h2 id="h-faq"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 115 .5c0 1.5-2.500 2-2.500 3.500M12 17v.5"/></svg>Common questions</h2>
+    <details><summary>What counts as e-waste?</summary><p>Anything with a plug, battery or circuit board that is no longer wanted: phones, laptops, chargers, cables, earphones, power banks and small appliances.</p></details>
+    <details><summary>Why not just put it in the bin?</summary><p>Devices contain metals and chemicals that can leak into soil and water, and batteries can start fires in waste trucks and dumps. Recyclers also recover valuable materials.</p></details>
+    <details><summary>Is my data safe if I recycle it?</summary><p>Not automatically. Back up, sign out and factory reset first. Use the checklist above.</p></details>
+    <details><summary>How do I know a recycler is genuine?</summary><p>Ask for their authorization from the state pollution control board and check it against the official list before you hand anything over.</p></details>
+  </section>
+
+  <footer>
+    <p><strong>Second Life</strong></p>
+    <p>A student project for 2026CSAE102 Technology and Sustainability, Bennett University.</p>
+    <p>Team: add member names here.</p>
+  </footer>
+</main>
+
+<script>
+// ---- Editable data: team must replace placeholders and cite sources ----
+var FOOTPRINT = { // kg CO2e from manufacturing; Fairphone 5 source linked in the page
+  phone:{label:"Fairphone 5 (example)",kg:32.7,life:3},
+  laptop:{label:"Laptop (sample estimate)",kg:250,life:5},
+  tablet:{label:"Tablet (sample estimate)",kg:100,life:4}
+};
+var PLACES = [
+  {name:"Campus e-waste bin (example: hostel lobby)",type:"Campus bin",where:"Add exact building and floor",takes:"Chargers, cables, small electronics",verify:true},
+  {name:"Authorized e-waste recycler (name to be added)",type:"Authorized recycler",where:"Add address and phone",takes:"Phones, laptops, batteries",verify:true},
+  {name:"Local repair shop (name to be added)",type:"Repair shop",where:"Add address and phone",takes:"Screens, batteries, ports",verify:true},
+  {name:"Brand take-back program (brand to be added)",type:"Take-back",where:"Add store or mail-in link",takes:"Same-brand devices",verify:true}
+];
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+// ---- Tabs ----
+var tabs=[0,1,2,3].map(function(i){return document.getElementById("t"+i)});
+function show(i){tabs.forEach(function(t,j){t.setAttribute("aria-selected",j===i);document.getElementById("p"+j).hidden=j!==i})}
+tabs.forEach(function(t,i){t.addEventListener("click",function(){show(i)});t.addEventListener("keydown",function(e){if(e.key==="ArrowRight"){show((i+1)%4);tabs[(i+1)%4].focus()}if(e.key==="ArrowLeft"){show((i+3)%4);tabs[(i+3)%4].focus()}})});
+
+// ---- Guided device diagnosis ----
+var followups={
+  none:{label:'Does it work as expected?',options:[['yes','Yes, it works normally'],['no','No, it has an issue']]},
+  slow:{label:'When does it feel slow?',options:[['storage','Storage is nearly full'],['oneapp','Only one app is slow'],['always','Everything is slow, even after restart'],['unsure','Not sure']]},
+  battery:{label:'What do you notice about the battery?',options:[['swollen','It looks swollen, feels unusually hot, or leaks'],['fast','It drains quickly even with light use'],['apps','It mainly drains while using certain apps'],['unsure','Not sure']]},
+  screen:{label:'What happens when you use the screen?',options:[['cracked','It is cracked, but display and touch work'],['display','It flickers, has lines, or stays black'],['touch','The image is clear, but touch does not work'],['unsure','Not sure']]},
+  dead:{label:'What happens when you connect a charger?',options:[['icon','A charging icon or light appears'],['nothing','Nothing happens with a known working charger and outlet'],['logo','It shows a logo, then shuts down or restarts'],['unsure','I have not checked / not sure']]},
+  water:{label:'Was it recently exposed to liquid?',options:[['wetnow','Yes, it is wet now or was recently wet'],['dry','It was wet earlier and now seems dry'],['unsure','Not sure']]},
+  swollen:{label:'Is it swollen, hot, or leaking?',options:[['yes','Yes'],['unsure','I am not sure']]}
+};
+function updateFollowup(){
+  var f=followups[document.getElementById('sym').value],host=document.getElementById('followup');
+  host.innerHTML=f?'<label for="detail">'+esc(f.label)+'</label><select id="detail">'+f.options.map(function(o){return '<option value="'+esc(o[0])+'">'+esc(o[1])+'</option>'}).join('')+'</select>':'';
+}
+document.getElementById('sym').addEventListener('change',updateFollowup);updateFollowup();
+function diagnose(dev,age,sym,detail){
+  if(sym==='swollen'||detail==='swollen'||detail==='wetnow') return {urgent:true,title:'Stop and handle it safely',why:detail==='wetnow'?'Liquid exposure can cause a short circuit, even if the device appears to work.':'A swollen, hot, or leaking battery can be a fire and injury risk.',steps:detail==='wetnow'?['If safe, power it off. Do not charge it or turn it back on.','Keep it away from heat and flammable items; do not open or dry it with heat.','Ask a qualified repair service how to handle it safely.']:['Stop using and charging it. Do not press, puncture, or open it.','Keep it away from heat and flammable items; avoid handling a leaking battery.','Contact a qualified repair service or authorized battery recycler for safe handling.']};
+  if(sym==='water') return {urgent:true,title:'Possible liquid damage',why:'Moisture can remain inside after the outside looks dry, so powering it on may worsen damage.',steps:['Keep it powered off and do not charge it.','Do not use a hair dryer, place it in rice, or open it.','Ask a qualified repair service to inspect it before reuse.']};
+  if(sym==='none'&&detail==='yes') return {title:'No issue reported',why:'If it works normally, extending its life is usually the simplest sustainable choice.',steps:['Keep using it or pass it on if you no longer need it.','Back up your data and sign out before giving it to someone else.']};
+  if(dev==='charger') return {title:'Possible charger, cable, or port fault',why:'A cable, adapter, outlet, or device port can cause similar symptoms; this check cannot isolate the failed part.',steps:['If the cable is frayed, bent, or hot, stop using it.','Otherwise, try a compatible known-good cable and adapter with a different outlet.','If the issue continues, ask a repair shop to check the charger and device port.']};
+  if(sym==='slow'){
+    if(detail==='storage') return {title:'Full storage may be slowing it down',why:'Low free storage can make a phone or computer feel sluggish.',steps:['Back up important files, then remove items you no longer need.','Restart and check whether performance improves.','If it remains slow, ask a repair shop to check storage health.']};
+    if(detail==='oneapp') return {title:'The issue may be limited to one app',why:'A single slow app can be caused by its settings or update rather than device hardware.',steps:['Update the app and restart the device.','Check whether other apps work normally.','If several apps are affected, get the device checked.']};
+    return {title:'Possible software or storage issue',why:'Slow performance can have several causes; your answers do not confirm a hardware fault.',steps:['Restart and install available system updates.','Check free storage and back up important files.','If it stays slow, ask a repair shop to check storage, battery, and memory.']};
+  }
+  if(sym==='battery'){
+    if(detail==='fast') return {title:'Battery wear is possible',why:'Fast drain during light use can indicate an aging battery, but background apps or settings can also contribute.',steps:['Check battery usage settings for apps using unusually high power.','Restart and see whether the drain continues.','If it persists, ask a repair shop for a battery health check and replacement quote.']};
+    return {title:'Battery drain may be usage-related',why:'Heavy apps, weak signal, or high screen brightness can increase power use.',steps:['Check battery usage settings and reduce high-use settings if practical.','If it still drains quickly with light use, ask for a battery health check.','Stop using and charging it if it becomes swollen or unusually hot.']};
+  }
+  if(sym==='screen') return {title:detail==='cracked'?'Likely screen or glass damage':'Possible display or touch fault',why:'Screen, display, and touch problems need an in-person inspection to identify the failed part.',steps:['Back up your data if the device is still usable.','Avoid pressing on broken glass; cover it safely for transport.','Ask a repair shop for a diagnosis and written repair quote.']};
+  if(sym==='dead'){
+    if(detail==='icon') return {title:'Charging works, but it still will not start',why:'A deeply drained battery or software issue is possible; this does not confirm the cause.',steps:['Leave it connected to a known-good charger for 30 minutes, then try the normal power button.','If it remains stuck on a logo or blank screen, seek repair advice.']};
+    return {title:'Possible power, battery, or charging-port fault',why:'Several different faults can cause a device not to respond, and they need testing to tell apart.',steps:['If the device is dry and the battery looks normal, try one compatible known-good charger and outlet.','Do not keep trying if it gets hot, smells unusual, or the battery looks swollen.','If there is still no response, ask a repair shop for diagnosis before deciding to recycle it.']};
+  }
+  return {title:'A technician should inspect it',why:'The symptoms are not specific enough to identify the cause remotely.',steps:['Avoid opening the device or attempting risky repairs.','Ask a repair shop for a diagnosis and quote.',age===2?'Compare the quote with the cost of a reliable refurbished device.':'If repair is practical, keeping the device in use avoids premature replacement.']};
+}
+document.getElementById('go0').addEventListener('click',function(){
+  var sym=document.getElementById('sym').value,detail=document.getElementById('detail');
+  var r=diagnose(document.getElementById('dev').value,+document.getElementById('age').value,sym,detail?detail.value:'');
+  document.getElementById('out0').innerHTML='<div class="result'+(r.urgent?' urgent':'')+'"><h3>'+esc(r.title)+'</h3><p>'+esc(r.why)+'</p><ul>'+r.steps.map(function(s){return '<li>'+esc(s)+'</li>'}).join('')+'</ul><p class="note"><strong>Guide only:</strong> this suggests possible causes from your answers; it cannot confirm a fault. Stop and seek help for heat, swelling, leaks, or liquid exposure.</p></div>';
+});
+// ---- Directory ----
+function renderList(){
+  var f=document.getElementById("ftype").value;
+  var rows=PLACES.filter(function(p){return f==="all"||p.type===f});
+  document.getElementById("list").innerHTML=rows.length?rows.map(function(p){
+    return '<div class="entry"><h3>'+esc(p.name)+'</h3><p class="meta">'+esc(p.where)+'</p><p class="meta">Takes: '+esc(p.takes)+'</p><span class="tag">'+esc(p.type)+'</span>'+(p.verify?'<span class="tag todo">Verify</span>':'')+'</div>'}).join(""):'<p>No places in this category yet. Add one to the PLACES list.</p>';
+}
+document.getElementById("ftype").addEventListener("change",renderList);renderList();
+
+// ---- Charts ----
+function bars(items){var max=Math.max.apply(null,items.map(function(i){return i.v}));var h=items.length*34+6;var s='<svg viewBox="0 0 340 '+h+'" role="img" aria-label="Bar chart of kg CO2e">';items.forEach(function(it,i){var y=i*34+4,w=Math.max(4,it.v/max*210);s+='<text class="bl" x="0" y="'+(y+17)+'">'+esc(it.l)+'</text><rect class="bar'+(it.hl?' hl':'')+'" x="86" y="'+y+'" width="'+w+'" height="24" rx="4"/><text class="bv" x="'+(92+w)+'" y="'+(y+17)+'">'+it.v.toFixed(1)+'</text>'});return s+'</svg>'}
+document.getElementById("fpchart").innerHTML=bars(Object.keys(FOOTPRINT).map(function(k){return {l:FOOTPRINT[k].label,v:FOOTPRINT[k].kg}}));
+// ---- Carbon calculator ----
+var cd=document.getElementById("cdev");
+Object.keys(FOOTPRINT).forEach(function(k){var o=document.createElement("option");o.value=k;o.textContent=FOOTPRINT[k].label;cd.appendChild(o)});
+document.getElementById("go2").addEventListener("click",function(){
+  var d=FOOTPRINT[cd.value],y=Math.max(1,Math.min(10,+document.getElementById("cyrs").value||1));
+  var saved=d.kg/d.life*y;
+  var items=[1,2,3,4,5].map(function(n){return {l:n+(n>1?' years':' year'),v:d.kg/d.life*n,hl:n===y}});
+  document.getElementById("out2").innerHTML='<div class="result"><div class="big">'+saved.toFixed(1)+' kg</div><p style="margin-top:8px">CO₂e you avoid by keeping your '+esc(d.label.toLowerCase())+' '+y+' more year'+(y>1?'s':'')+'.</p></div><h3 style="margin:18px 0 0;font-size:1rem">Savings by years kept (kg CO₂e)</h3><div class="chart">'+bars(items)+'</div>';
+});
+document.getElementById("cnote").textContent="Simplified estimate: manufacturing footprint divided by assumed lifespan, multiplied by extra years kept. Fairphone 5 is a model-specific sourced example; laptop and tablet figures are placeholders.";
+var wipes=document.querySelectorAll(".wipe");
+function wipeUpdate(){var n=0;wipes.forEach(function(w){if(w.checked)n++});document.getElementById("pfill").style.width=(n/5*100)+"%";document.getElementById("pbar").setAttribute("aria-valuenow",n);document.getElementById("ptxt").textContent=n===5?"All done. Your device is ready to hand over.":n+" of 5 steps done"}
+wipes.forEach(function(w){w.addEventListener("change",wipeUpdate)});
+</script>
+</body>
+</html>
